@@ -8,16 +8,16 @@ CREATE TABLE department (
   name varchar(30) NOT NULL,
   PRIMARY KEY(id)
 );
-
+-- Create the table role.
 CREATE TABLE role (
   id INT AUTO_INCREMENT NOT NULL,
   title varchar(30) NOT NULL,
-  salary DECIMAL NOT NULL,
+  salary DECIMAL (10,2) NOT NULL,
   department_id INT,
   PRIMARY KEY(id),
   FOREIGN KEY(department_id) REFERENCES department(id)
 );
-
+-- Create the table employee.
 CREATE TABLE employee (
   id INT AUTO_INCREMENT NOT NULL,
   first_name varchar(30) NOT NULL,
