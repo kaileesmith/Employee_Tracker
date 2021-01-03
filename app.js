@@ -58,9 +58,36 @@ const startMenu= () => {
 };
 
 
+const veiwDepartments = () => {
+    const query = 
+    'SELECT * FROM department';
+    connection.query(query, (err, res) => {
+        if (err) throw err;
+        console.log(res);
+        startMenu();
+        });
+    };
 
 
+    const veiwRoles = () => {
+        const query = 
+        'SELECT * FROM role';
+        connection.query(query, (err, res) => {
+            if (err) throw err;
+            console.log(res);
+            startMenu();
+            });
+        };
 
+        const veiwEmployees = () => {
+            const query = 
+            'SELECT * FROM employee';
+            connection.query(query, (err, res) => {
+                if (err) throw err;
+                console.log(res);
+                startMenu();
+                });
+            };
 
 
 
