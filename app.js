@@ -10,8 +10,65 @@ const connection = mysql.createConnection({
 	database: "employeeTracker_db",
 });
 
+const startMenu= () => {
+    inquirer.prompt({
+        name: 'optionList',
+        type: 'rawlist',
+        message: 'What would you like to do?',
+        choices: [
+            'View Departments',
+            'Veiw Roles',
+            'View Employees',
+            'Add a Department',
+            'Add a Role',
+            'Add a Employee'
+        ],
+    })
+    .then((answer) => {
+        switch (answer.optionList) {
+            case 'View Departments':
+                veiwDepartments();
+                break;
+
+            case 'Veiw Roles':
+                veiwRoles();
+                break;
+
+            case 'View Employees':
+                veiwEmployees();
+                break;
+
+            case 'Add a Department':
+                addDepartment();
+                break;
+
+            case 'Add a Role':
+                addRole();
+                break;
+
+            case 'Add a Role':
+                addRole();
+                break;
+
+            default:
+            connection.end();
+            process.exit(0);
+        }
+    });
+};
+
+
+
+
+
+
+
+
+
+
+// connect to database
 connection.connect((err) => {
     if (err) throw err;
     console.log(`connected as id ${connection.threadId}`);
-
+    startMenu();
 });
