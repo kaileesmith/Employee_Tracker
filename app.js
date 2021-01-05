@@ -22,7 +22,8 @@ const startMenu= () => {
             'View Employees',
             'Add a Department',
             'Add a Role',
-            'Add a Employee'
+            'Add a Employee',
+            "Exit",
         ],
     })
     .then((answer) => {
@@ -112,8 +113,6 @@ const addDepartment = () => {
                 });
             });
         };
-
-
 
 
 // connect to database
