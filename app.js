@@ -1,5 +1,6 @@
 const mysql = require('mysql');
 const inquirer = require('inquirer');
+const consTable = require("console.table");
 
 // Start connection to sql database
 const connection = mysql.createConnection({
@@ -46,8 +47,8 @@ const startMenu= () => {
                 addRole();
                 break;
 
-            case 'Add a Role':
-                addRole();
+            case 'Add a Employee':
+                addEmployee();
                 break;
 
             default:
@@ -57,7 +58,7 @@ const startMenu= () => {
     });
 };
 
-
+// Veiw functions
 const veiwDepartments = () => {
     const query = 
     'SELECT * FROM department';
@@ -89,6 +90,28 @@ const veiwDepartments = () => {
                 });
             };
 
+// Add Functions
+
+const addDepartment = () => {
+    inquirer.prompt({
+        name:"addDept",
+        type:"input",
+        message:"What is the name of the department you want to add?",
+    }).then(function (answer) {
+        connection.query(
+            "INSERT INTO department SET ?", {
+                    name: answer.addDept
+                }
+            );
+            let query = 
+            'SELECT * FROM department';
+            connection.query(query, (err, res) => {
+                if (err) throw err;
+                console.log(res);
+                startMenu();
+                });
+            });
+        };
 
 
 
