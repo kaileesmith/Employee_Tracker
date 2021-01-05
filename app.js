@@ -114,6 +114,49 @@ const addDepartment = () => {
             });
         };
 
+        const addEmployee = () => {
+            connection.query("SELECT * FROM role", function (err, res) {
+                if (err) throw err;
+        
+            inquirer.prompt([
+                {
+                name: "fName",
+                type:"input",
+                message: "What is new employee's first name?",
+            },
+            {
+                name: "lName",
+                type:"input",
+                message: "What is new employee's last name?",
+            },
+            {
+                name: "roleId",
+                type:"input",
+                message: "What is new employee's role?",
+            },
+            {
+                name: "mangerId",
+                type: "input",
+                message: "Who is their Manager?",
+                },
+            ])
+            .then((answers) => {
+            connection.query(
+                "INSERT INTO employees SET ?",
+                {
+                    first_name: answer.fName,
+                    last_name: answer.lName,
+                    role_id: answer.roleId,
+                    manager_id:answer.mangerId,
+                },
+                            (err, res) => {
+                                if (err) throw err;
+                                console.log("A new employee has been added to the database! \n");
+                        startMenu();
+                            });
+                });
+            });
+        };
 
 // connect to database
 connection.connect((err) => {
