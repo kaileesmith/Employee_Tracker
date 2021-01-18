@@ -2,6 +2,7 @@ const mysql = require('mysql');
 const inquirer = require('inquirer');
 const consTable = require("console.table");
 
+
 // Start connection to sql database
 const connection = mysql.createConnection({
 	host: "localhost",
@@ -115,9 +116,6 @@ const addDepartment = () => {
         };
 
         const addEmployee = () => {
-            connection.query("SELECT * FROM role", function (err, res) {
-                if (err) throw err;
-        
             inquirer.prompt([
                 {
                 name: "fName",
@@ -135,26 +133,36 @@ const addDepartment = () => {
                 message: "What is new employee's role?",
             },
             {
-                name: "mangerId",
+                name: "managerId",
                 type: "input",
                 message: "Who is their Manager?",
                 },
             ])
             .then((answers) => {
-            connection.query(
-                "INSERT INTO employees SET ?",
-                {
-                    first_name: answer.fName,
-                    last_name: answer.lName,
-                    role_id: answer.roleId,
-                    manager_id:answer.mangerId,
-                },
-                            (err, res) => {
-                                if (err) throw err;
-                                console.log("A new employee has been added to the database! \n");
-                        startMenu();
-                            });
-                });
+                try {
+                    console.log(answers.fName,
+                        answers.lName,
+                        +answers.roleId,
+                        +answers.managerId)
+                    console.log( answers.roleId, typeof answers.roleId)
+                    console.log(answers.roleId, typeof +answers.roleId)
+                    connection.query(
+                        "INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?);",
+                        [
+                            answers.fName,
+                            answers.lName,
+                            +answers.roleId,
+                            +answers.managerId,
+                        ],
+                                    (err, answers) => {
+                                        if (err) throw err;
+                                        console.log(answers);
+                                    }
+                                    );
+                                startMenu();
+                } catch ({message}) {
+                    console.log(message)
+                }
             });
         };
 
